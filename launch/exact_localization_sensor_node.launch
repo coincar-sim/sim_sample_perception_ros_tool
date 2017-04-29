@@ -1,0 +1,9 @@
+<launch>
+
+  <arg name="config" default="$(find sim_sample_perception_ros_tool)/launch/params/exact_localization_sensor_parameters.yaml" />
+
+  <node pkg="sim_sample_perception_ros_tool" type="exact_localization_sensor" name="exact_localization_sensor" output="screen">
+    <rosparam command="load" file="$(arg config)"/>
+  </node>
+
+</launch>

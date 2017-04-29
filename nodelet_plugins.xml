@@ -1,0 +1,18 @@
+<library path="lib/libexact_localization_sensor_nodelet">
+<class name="sim_sample_perception_ros_tool/ExactLocalizationSensorNodelet"
+       type="sim_sample_perception_ros_tool::ExactLocalizationSensorNodelet" base_class_type="nodelet::Nodelet">
+  <description></description>
+</class>
+</library>
+<library path="lib/libabstract_object_sensor_nodelet">
+<class name="sim_sample_perception_ros_tool/AbstractObjectSensorNodelet"
+       type="sim_sample_perception_ros_tool::AbstractObjectSensorNodelet" base_class_type="nodelet::Nodelet">
+  <description></description>
+</class>
+</library>
+<library path="lib/libsim_sample_perception_ros_tool_utils_nodelet">
+<class name="sim_sample_perception_ros_tool/SimSamplePerceptionRosToolUtilsNodelet"
+       type="sim_sample_perception_ros_tool::SimSamplePerceptionRosToolUtilsNodelet" base_class_type="nodelet::Nodelet">
+  <description></description>
+</class>
+</library>

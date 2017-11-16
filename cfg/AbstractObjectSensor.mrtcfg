@@ -47,7 +47,7 @@ gen.add("verbosity", paramtype='std::string', description="Set logger level for 
 # Your Params here
 gen.add("vehicle_id", paramtype='int', description="Vehicle ID")
 gen.add("objects_ground_truth_topic_with_ns", paramtype='std::string', description="Topicname for Ground Truth Information about Objects", default="default_objects_ground_truth_topic_with_ns")
-gen.add("perceptedObjects_sensor_out_topic", paramtype='std::string', description="Topicname for percepted Objects", default="default_perceptedObjects_sensor_out_topic")
+gen.add("perceivedObjects_sensor_out_topic", paramtype='std::string', description="Topicname for perceived Objects", default="default_perceivedObjects_sensor_out_topic")
 gen.add("sensor_child_frame_id_prefix", paramtype='std::string', description="sensor-specific child-frame-id-prefix for objects motionState")
 
 

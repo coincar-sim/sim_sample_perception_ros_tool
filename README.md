@@ -24,8 +24,8 @@ Consists of two sensors:
   * **vehicle_id**: Id of the vehicle, needs to be unique within the framework
   * **vehicle_ns**: Namespace of the vehicle, needs to be unique within the framework
   * **objects_ground_truth_topic_with_ns**: Topic under which the ground truth states of the objects are received
-  * **perc_pred_obj_topic**: Topic for the percepted objects
-  * **perc_egomotion_topic**: Topic for the percepted ego motion state
+  * **perc_pred_obj_topic**: Topic for the perceived objects
+  * **perc_egomotion_topic**: Topic for the perceived ego motion state
   * **internal_communication_subns**: Subnamespace for vehicle-internal communication
   * **BSM_topic**: Topic for the basic safety messages
 

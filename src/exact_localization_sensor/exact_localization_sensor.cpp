@@ -28,7 +28,7 @@ ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle,
     /**
      * Publishers & subscriber
      */
-    // publisher for percepted Motion (egoMotion)
+    // publisher for perceived Motion (egoMotion)
     percEgoMotionPub_ = node_handle.advertise<automated_driving_msgs::MotionState>(
         params_.egoMotion_sensor_out_topic, params_.msg_queue_size);
 

@@ -35,7 +35,7 @@
         <param name="sensor_child_frame_id_prefix" value="v$(arg vehicle_id)_$(arg sensor_name_abstract_object_sensor)_"/>
 
         <!-- Remap Topics -->
-        <remap from="default_perceptedObjects_sensor_out_topic" to="/$(arg vehicle_ns)/$(arg perc_pred_obj_topic)"/>
+        <remap from="default_perceivedObjects_sensor_out_topic" to="/$(arg vehicle_ns)/$(arg perc_pred_obj_topic)"/>
         <remap from="default_objects_ground_truth_topic_with_ns" to="$(arg objects_ground_truth_topic_with_ns)"/>
     </node>
 

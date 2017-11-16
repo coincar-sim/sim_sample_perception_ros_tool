@@ -24,7 +24,7 @@ private:
 
     AbstractObjectSensorParameters params_;
 
-    automated_driving_msgs::ObjectStateArray latestPerceptedObjects_;
+    automated_driving_msgs::ObjectStateArray latestPerceivedObjects_;
 
     dynamic_reconfigure::Server<AbstractObjectSensorConfig>
         reconfigSrv_; // Dynamic reconfiguration service

@@ -19,10 +19,10 @@ AbstractObjectSensor::AbstractObjectSensor(ros::NodeHandle node_handle,
     /**
      * Publishers & subscriber
      */
-    // publisher for percepted objects (all percepted objects / objects from ground truth except
+    // publisher for perceived objects (all perceived objects / objects from ground truth except
     // itself)
     percObjectsPub_ = node_handle.advertise<automated_driving_msgs::ObjectStateArray>(
-        params_.perceptedObjects_sensor_out_topic, params_.msg_queue_size);
+        params_.perceivedObjects_sensor_out_topic, params_.msg_queue_size);
 
     // Instantiate subscriber last, to assure all objects are initialized when first message is
     // received.
@@ -35,25 +35,25 @@ AbstractObjectSensor::AbstractObjectSensor(ros::NodeHandle node_handle,
 
 /**
  *This Callback receives ground truth ObjectStateArray and publishes
- *      percepted Objects as ObjectStateArray
+ *      perceived Objects as ObjectStateArray
  */
 void AbstractObjectSensor::subCallback(
     const automated_driving_msgs::ObjectStateArray::ConstPtr& msg) {
 
-    automated_driving_msgs::ObjectStateArray perceptedObjects =
+    automated_driving_msgs::ObjectStateArray perceivedObjects =
         util_perception::RemoveObjectFromObjectStateArray(*msg, params_.vehicle_id);
 
-    for (size_t i = 0; i < perceptedObjects.objects.size(); i++) {
+    for (size_t i = 0; i < perceivedObjects.objects.size(); i++) {
 
-        const int32_t objectId = perceptedObjects.objects[i].object_id;
+        const int32_t objectId = perceivedObjects.objects[i].object_id;
         bool foundAndUnique;
 
-        automated_driving_msgs::ObjectState& objectState = perceptedObjects.objects[i];
+        automated_driving_msgs::ObjectState& objectState = perceivedObjects.objects[i];
         automated_driving_msgs::ObjectState lastObjectState =
             util_perception::ObjectStateFromObjectStateArray(
-                latestPerceptedObjects_, objectId, foundAndUnique);
+                latestPerceivedObjects_, objectId, foundAndUnique);
         // automated_driving_msgs::ObjectStatePtr lastObjStatePtr =
-        // util_perception::ObjectStatePtrFromObjectStateArray(latestPerceptedObjects_, objectId,
+        // util_perception::ObjectStatePtrFromObjectStateArray(latestPerceivedObjects_, objectId,
         // foundAndUnique);
 
         if (!foundAndUnique) {
@@ -92,11 +92,11 @@ void AbstractObjectSensor::subCallback(
         }
     }
 
-    // publish percepted objects
-    percObjectsPub_.publish(perceptedObjects);
+    // publish perceived objects
+    percObjectsPub_.publish(perceivedObjects);
 
-    // set new newPerceptedObjects state as latest percepted MotionState state
-    latestPerceptedObjects_ = perceptedObjects;
+    // set new newPerceivedObjects state as latest perceived MotionState state
+    latestPerceivedObjects_ = perceivedObjects;
 }
 
 

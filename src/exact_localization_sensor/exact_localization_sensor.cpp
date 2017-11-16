@@ -67,6 +67,10 @@ void ExactLocalizationSensor::subCallback(
         return;
     } else {
         ros::Duration deltaTime = egoObjectState.header.stamp - latestMotionState_.header.stamp;
+        if (deltaTime.toSec() < 0.0001) {
+            ROS_WARN("DeltaTime too small for calculation of new state, deltaTime=%f", deltaTime.toSec());
+            return;
+        }
 
         if (!util_perception::poseValid(egoObjectState.motion_state)) {
             ROS_DEBUG("Received MotionState.pose is marked as unreliable. Forwarding it anyway.");

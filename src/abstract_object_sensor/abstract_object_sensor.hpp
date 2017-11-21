@@ -26,8 +26,7 @@ private:
 
     automated_driving_msgs::ObjectStateArray latestPerceivedObjects_;
 
-    dynamic_reconfigure::Server<AbstractObjectSensorConfig>
-        reconfigSrv_; // Dynamic reconfiguration service
+    dynamic_reconfigure::Server<AbstractObjectSensorConfig> reconfigSrv_; // Dynamic reconfiguration service
 
     void subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg);
 

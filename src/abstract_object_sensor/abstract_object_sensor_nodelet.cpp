@@ -16,4 +16,7 @@ void AbstractObjectSensorNodelet::onInit() {
 
 } // namespace sim_sample_perception_ros_tool
 
-PLUGINLIB_DECLARE_CLASS(sim_sample_perception_ros_tool, AbstractObjectSensorNodelet, sim_sample_perception_ros_tool::AbstractObjectSensorNodelet, nodelet::Nodelet);
+PLUGINLIB_DECLARE_CLASS(sim_sample_perception_ros_tool,
+                        AbstractObjectSensorNodelet,
+                        sim_sample_perception_ros_tool::AbstractObjectSensorNodelet,
+                        nodelet::Nodelet);

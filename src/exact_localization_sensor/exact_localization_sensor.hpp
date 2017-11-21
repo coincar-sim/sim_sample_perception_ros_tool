@@ -30,8 +30,7 @@ private:
 
     ExactLocalizationSensorParameters params_;
 
-    dynamic_reconfigure::Server<ExactLocalizationSensorConfig>
-        reconfigSrv_; // Dynamic reconfiguration service
+    dynamic_reconfigure::Server<ExactLocalizationSensorConfig> reconfigSrv_; // Dynamic reconfiguration service
 
     void subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg);
     void timerCallbackBSM(const ros::TimerEvent&);

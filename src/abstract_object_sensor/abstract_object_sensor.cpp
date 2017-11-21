@@ -2,8 +2,7 @@
 
 namespace sim_sample_perception_ros_tool {
 
-AbstractObjectSensor::AbstractObjectSensor(ros::NodeHandle node_handle,
-                                           ros::NodeHandle private_node_handle)
+AbstractObjectSensor::AbstractObjectSensor(ros::NodeHandle node_handle, ros::NodeHandle private_node_handle)
         : reconfigSrv_{private_node_handle}, params_{private_node_handle} {
 
     /**
@@ -37,8 +36,7 @@ AbstractObjectSensor::AbstractObjectSensor(ros::NodeHandle node_handle,
  *This Callback receives ground truth ObjectStateArray and publishes
  *      perceived Objects as ObjectStateArray
  */
-void AbstractObjectSensor::subCallback(
-    const automated_driving_msgs::ObjectStateArray::ConstPtr& msg) {
+void AbstractObjectSensor::subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg) {
 
     automated_driving_msgs::ObjectStateArray perceivedObjects =
         util_perception::RemoveObjectFromObjectStateArray(*msg, params_.vehicle_id);
@@ -50,8 +48,7 @@ void AbstractObjectSensor::subCallback(
 
         automated_driving_msgs::ObjectState& objectState = perceivedObjects.objects[i];
         automated_driving_msgs::ObjectState lastObjectState =
-            util_perception::ObjectStateFromObjectStateArray(
-                latestPerceivedObjects_, objectId, foundAndUnique);
+            util_perception::ObjectStateFromObjectStateArray(latestPerceivedObjects_, objectId, foundAndUnique);
         // automated_driving_msgs::ObjectStatePtr lastObjStatePtr =
         // util_perception::ObjectStatePtrFromObjectStateArray(latestPerceivedObjects_, objectId,
         // foundAndUnique);
@@ -59,12 +56,10 @@ void AbstractObjectSensor::subCallback(
         if (!foundAndUnique) {
             continue;
         } else {
-            ros::Duration deltaTime =
-                objectState.header.stamp - lastObjectState.motion_state.header.stamp;
+            ros::Duration deltaTime = objectState.header.stamp - lastObjectState.motion_state.header.stamp;
 
             if (!util_perception::poseValid(objectState.motion_state)) {
-                ROS_DEBUG(
-                    "Received MotionState.pose is marked as unreliable. Forwarding it anyway.");
+                ROS_DEBUG("Received MotionState.pose is marked as unreliable. Forwarding it anyway.");
             }
 
             if (!util_perception::twistValid(objectState.motion_state)) {

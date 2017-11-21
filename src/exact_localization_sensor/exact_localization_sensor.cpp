@@ -2,8 +2,7 @@
 
 namespace sim_sample_perception_ros_tool {
 
-ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle,
-                                                 ros::NodeHandle private_node_handle)
+ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle, ros::NodeHandle private_node_handle)
         : reconfigSrv_{private_node_handle}, params_{private_node_handle} {
 
     /**
@@ -14,8 +13,7 @@ ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle,
     /**
      * Set up dynamic reconfiguration
      */
-    reconfigSrv_.setCallback(
-        boost::bind(&ExactLocalizationSensor::reconfigureRequest, this, _1, _2));
+    reconfigSrv_.setCallback(boost::bind(&ExactLocalizationSensor::reconfigureRequest, this, _1, _2));
 
     // as with initialization no information about the motion state is available set diagonals of
     // covariance matrizes to -1
@@ -29,17 +27,16 @@ ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle,
      * Publishers & subscriber
      */
     // publisher for perceived Motion (egoMotion)
-    percEgoMotionPub_ = node_handle.advertise<automated_driving_msgs::MotionState>(
-        params_.egoMotion_sensor_out_topic, params_.msg_queue_size);
+    percEgoMotionPub_ = node_handle.advertise<automated_driving_msgs::MotionState>(params_.egoMotion_sensor_out_topic,
+                                                                                   params_.msg_queue_size);
 
     // publisher for BasicSafetyMessage (egoBSM)
-    egoBSMPub_ = node_handle.advertise<automated_driving_msgs::BasicSafetyMessage>(
-        params_.BSM_out_topic, params_.msg_queue_size);
+    egoBSMPub_ = node_handle.advertise<automated_driving_msgs::BasicSafetyMessage>(params_.BSM_out_topic,
+                                                                                   params_.msg_queue_size);
 
     // Timer for BasicSafetyMessage (egoBSM)
-    timerBSM_ = node_handle.createTimer(ros::Duration(1.0 / params_.BSM_fequency),
-                                        &ExactLocalizationSensor::timerCallbackBSM,
-                                        this);
+    timerBSM_ = node_handle.createTimer(
+        ros::Duration(1.0 / params_.BSM_fequency), &ExactLocalizationSensor::timerCallbackBSM, this);
 
     // Instantiate subscriber last, to assure all objects are initialized when first message is
     // received.
@@ -56,8 +53,7 @@ ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle,
  *			If necessary the Velocity and Acceleration is calculated from the received and latest saved
  *data.
  */
-void ExactLocalizationSensor::subCallback(
-    const automated_driving_msgs::ObjectStateArray::ConstPtr& msg) {
+void ExactLocalizationSensor::subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg) {
 
     bool foundAndUnique;
     automated_driving_msgs::ObjectState egoObjectState =
@@ -127,8 +123,7 @@ void ExactLocalizationSensor::timerCallbackBSM(const ros::TimerEvent&) {
 /**
  * This callback is called whenever a change was made in the dynamic_reconfigure window
  */
-void ExactLocalizationSensor::reconfigureRequest(ExactLocalizationSensorConfig& config,
-                                                 uint32_t level) {
+void ExactLocalizationSensor::reconfigureRequest(ExactLocalizationSensorConfig& config, uint32_t level) {
     params_.fromConfig(config);
 }
 

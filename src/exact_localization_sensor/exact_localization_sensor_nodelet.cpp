@@ -16,4 +16,7 @@ void ExactLocalizationSensorNodelet::onInit() {
 
 } // namespace sim_sample_perception_ros_tool
 
-PLUGINLIB_DECLARE_CLASS(sim_sample_perception_ros_tool, ExactLocalizationSensorNodelet, sim_sample_perception_ros_tool::ExactLocalizationSensorNodelet, nodelet::Nodelet);
+PLUGINLIB_DECLARE_CLASS(sim_sample_perception_ros_tool,
+                        ExactLocalizationSensorNodelet,
+                        sim_sample_perception_ros_tool::ExactLocalizationSensorNodelet,
+                        nodelet::Nodelet);

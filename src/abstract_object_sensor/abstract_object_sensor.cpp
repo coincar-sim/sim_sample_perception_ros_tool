@@ -56,34 +56,9 @@ void AbstractObjectSensor::subCallback(const automated_driving_msgs::ObjectState
         if (!foundAndUnique) {
             continue;
         } else {
-            ros::Duration deltaTime = objectState.header.stamp - lastObjectState.motion_state.header.stamp;
 
-            if (!util_perception::poseValid(objectState.motion_state)) {
-                ROS_DEBUG("Received MotionState.pose is marked as unreliable. Forwarding it anyway.");
-            }
-
-            if (!util_perception::twistValid(objectState.motion_state)) {
-                if (util_perception::poseValid(lastObjectState.motion_state)) {
-                    util_perception::diffPoseToTwist(lastObjectState.motion_state.pose.pose,
-                                                     objectState.motion_state.pose.pose,
-                                                     deltaTime,
-                                                     objectState.motion_state.twist);
-                } else {
-                    ROS_DEBUG("Could not calculate twist as latest pose not valid.");
-                }
-            }
-
-            if (!util_perception::accelValid(objectState.motion_state)) {
-                if (util_perception::twistValid(lastObjectState.motion_state) &&
-                    util_perception::twistValid(objectState.motion_state)) {
-                    util_perception::diffTwistToAccel(lastObjectState.motion_state.twist.twist,
-                                                      objectState.motion_state.twist.twist,
-                                                      deltaTime,
-                                                      objectState.motion_state.accel);
-                } else {
-                    ROS_DEBUG("Could not calculate accel as latest twists not valid.");
-                }
-            }
+            util_perception::incorporatePrecedingDataToMotionstate(lastObjectState.motion_state,
+                                                                   objectState.motion_state);
         }
     }
 
@@ -93,7 +68,6 @@ void AbstractObjectSensor::subCallback(const automated_driving_msgs::ObjectState
     // set new newPerceivedObjects state as latest perceived MotionState state
     latestPerceivedObjects_ = perceivedObjects;
 }
-
 
 /**
  * This callback is called whenever a change was made in the dynamic_reconfigure window

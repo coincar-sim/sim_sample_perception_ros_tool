@@ -68,32 +68,7 @@ void ExactLocalizationSensor::subCallback(const automated_driving_msgs::ObjectSt
             return;
         }
 
-        if (!util_perception::poseValid(egoObjectState.motion_state)) {
-            ROS_DEBUG("Received MotionState.pose is marked as unreliable. Forwarding it anyway.");
-        }
-
-        if (!util_perception::twistValid(egoObjectState.motion_state)) {
-            if (util_perception::poseValid(latestMotionState_)) {
-                util_perception::diffPoseToTwist(latestMotionState_.pose.pose,
-                                                 egoObjectState.motion_state.pose.pose,
-                                                 deltaTime,
-                                                 egoObjectState.motion_state.twist);
-            } else {
-                ROS_DEBUG("Could not calculate twist as latest pose not valid.");
-            }
-        }
-
-        if (!util_perception::accelValid(egoObjectState.motion_state)) {
-            if (util_perception::twistValid(latestMotionState_) &&
-                util_perception::twistValid(egoObjectState.motion_state)) {
-                util_perception::diffTwistToAccel(latestMotionState_.twist.twist,
-                                                  egoObjectState.motion_state.twist.twist,
-                                                  deltaTime,
-                                                  egoObjectState.motion_state.accel);
-            } else {
-                ROS_DEBUG("Could not calculate accel as latest twists not valid.");
-            }
-        }
+        util_perception::incorporatePrecedingDataToMotionstate(latestMotionState_, egoObjectState.motion_state);
     }
 
     // publish new motion state

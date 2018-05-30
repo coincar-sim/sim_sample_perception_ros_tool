@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2017
+ * FZI Forschungszentrum Informatik, Karlsruhe, Germany (www.fzi.de)
+ * KIT, Institute of Measurement and Control, Karlsruhe, Germany (www.mrt.kit.edu)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include <util_automated_driving_msgs/util_automated_driving_msgs.hpp>
+#include <util_geometry_msgs/util_geometry_msgs.hpp>
+
 #include "exact_localization_sensor.hpp"
 
 namespace sim_sample_perception_ros_tool {
@@ -19,9 +52,9 @@ ExactLocalizationSensor::ExactLocalizationSensor(ros::NodeHandle node_handle, ro
     // covariance matrizes to -1
     // This ensures no calculations for velocity and acceleration are made before reliable data is
     // received.
-    latestMotionState_.pose.covariance = util_perception::invalidCov;
-    latestMotionState_.twist.covariance = util_perception::invalidCov;
-    latestMotionState_.accel.covariance = util_perception::invalidCov;
+    latestMotionState_.pose.covariance = util_geometry_msgs::checks::covarianceUnkownValues;
+    latestMotionState_.twist.covariance = util_geometry_msgs::checks::covarianceUnkownValues;
+    latestMotionState_.accel.covariance = util_geometry_msgs::checks::covarianceUnkownValues;
 
     /**
      * Publishers & subscriber
@@ -57,7 +90,8 @@ void ExactLocalizationSensor::subCallback(const automated_driving_msgs::ObjectSt
 
     bool foundAndUnique;
     automated_driving_msgs::ObjectState egoObjectState =
-        util_perception::ObjectStateFromObjectStateArray(*msg, params_.vehicle_id, foundAndUnique);
+        util_automated_driving_msgs::conversions::objectStateFromObjectStateArray(
+            msg, params_.vehicle_id, foundAndUnique);
 
     if (!foundAndUnique) {
         return;
@@ -68,14 +102,17 @@ void ExactLocalizationSensor::subCallback(const automated_driving_msgs::ObjectSt
             return;
         }
 
-        util_perception::incorporatePrecedingDataToMotionstate(latestMotionState_, egoObjectState.motion_state);
+        util_automated_driving_msgs::computations::incorporatePrecedingDataToMotionstate(latestMotionState_,
+                                                                                         egoObjectState.motion_state);
     }
-
-    // publish new motion state
-    percEgoMotionPub_.publish(egoObjectState.motion_state);
 
     // set new EgoObjectState state as latest EgoObjectState state
     latestMotionState_ = egoObjectState.motion_state;
+
+    // add uncertainty to ego-motionstate here, if desired
+
+    // publish new motion state
+    percEgoMotionPub_.publish(egoObjectState.motion_state);
 }
 
 /**

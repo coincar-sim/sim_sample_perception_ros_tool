@@ -14,7 +14,7 @@ Consists of two sensors:
 
 ## Installation
 * this package is part of the simulation framework
-* see simulation_management_ros_tool for installation and more details
+* see [coincarsim_getting_started](https://github.com/coincar-sim/coincarsim_getting_started) for installation and more details
 
 ## Usage
 * started within the a vehicle launchfile of the simulation_initialization_ros_tool

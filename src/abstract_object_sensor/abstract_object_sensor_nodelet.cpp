@@ -46,7 +46,6 @@ void AbstractObjectSensorNodelet::onInit() {
 
 } // namespace sim_sample_perception_ros_tool
 
-PLUGINLIB_DECLARE_CLASS(sim_sample_perception_ros_tool,
-                        AbstractObjectSensorNodelet,
-                        sim_sample_perception_ros_tool::AbstractObjectSensorNodelet,
-                        nodelet::Nodelet);
+// NOLINTNEXTLINE disable clang-tidy check for the macro
+PLUGINLIB_EXPORT_CLASS(sim_sample_perception_ros_tool::AbstractObjectSensorNodelet,
+                       nodelet::Nodelet);

@@ -41,7 +41,7 @@
 #include <automated_driving_msgs/ObjectState.h>
 #include <automated_driving_msgs/ObjectStateArray.h>
 
-#include "sim_sample_perception_ros_tool/ExactLocalizationSensorParameters.h"
+#include "sim_sample_perception_ros_tool/ExactLocalizationSensorInterface.h"
 
 namespace sim_sample_perception_ros_tool {
 
@@ -59,7 +59,7 @@ private:
 
     dynamic_reconfigure::Server<ExactLocalizationSensorConfig> reconfigSrv_; // Dynamic reconfiguration service
 
-    ExactLocalizationSensorParameters params_;
+    ExactLocalizationSensorInterface params_;
 
     void subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg);
     void timerCallbackBSM(const ros::TimerEvent&);

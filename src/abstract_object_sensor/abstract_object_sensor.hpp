@@ -39,7 +39,7 @@
 #include <automated_driving_msgs/ObjectState.h>
 #include <automated_driving_msgs/ObjectStateArray.h>
 
-#include "sim_sample_perception_ros_tool/AbstractObjectSensorParameters.h"
+#include "sim_sample_perception_ros_tool/AbstractObjectSensorInterface.h"
 
 namespace sim_sample_perception_ros_tool {
 
@@ -55,7 +55,7 @@ private:
 
     dynamic_reconfigure::Server<AbstractObjectSensorConfig> reconfigSrv_; // Dynamic reconfiguration service
 
-    AbstractObjectSensorParameters params_;
+    AbstractObjectSensorInterface params_;
 
     void subCallback(const automated_driving_msgs::ObjectStateArray::ConstPtr& msg);
 

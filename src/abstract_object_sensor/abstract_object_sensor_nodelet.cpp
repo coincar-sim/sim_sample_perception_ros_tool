@@ -28,9 +28,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "abstract_object_sensor.hpp"
 #include <nodelet/nodelet.h>
 #include <pluginlib/class_list_macros.h>
+#include "abstract_object_sensor.hpp"
 
 namespace sim_sample_perception_ros_tool {
 
@@ -47,5 +47,4 @@ void AbstractObjectSensorNodelet::onInit() {
 } // namespace sim_sample_perception_ros_tool
 
 // NOLINTNEXTLINE disable clang-tidy check for the macro
-PLUGINLIB_EXPORT_CLASS(sim_sample_perception_ros_tool::AbstractObjectSensorNodelet,
-                       nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS(sim_sample_perception_ros_tool::AbstractObjectSensorNodelet, nodelet::Nodelet);

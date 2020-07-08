@@ -81,14 +81,15 @@ void AbstractObjectSensor::subCallback(const automated_driving_msgs::ObjectState
 
         automated_driving_msgs::ObjectState& objectState = perceivedObjects.objects[i];
         automated_driving_msgs::ObjectState lastObjectState =
-            util_automated_driving_msgs::conversions::objectStateFromObjectStateArray(latestPerceivedObjects_, objectId, foundAndUnique);
+            util_automated_driving_msgs::conversions::objectStateFromObjectStateArray(
+                latestPerceivedObjects_, objectId, foundAndUnique);
 
         if (!foundAndUnique) {
             continue;
         } else {
 
-            util_automated_driving_msgs::computations::incorporatePrecedingDataToMotionstate(lastObjectState.motion_state,
-                                                                   objectState.motion_state);
+            util_automated_driving_msgs::computations::incorporatePrecedingDataToMotionstate(
+                lastObjectState.motion_state, objectState.motion_state);
         }
     }
 
@@ -99,8 +100,6 @@ void AbstractObjectSensor::subCallback(const automated_driving_msgs::ObjectState
 
     // publish perceived objects
     percObjectsPub_.publish(perceivedObjects);
-
-
 }
 
 /**
